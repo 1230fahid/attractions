@@ -76,9 +76,10 @@ app.get('/attractions/country', async (req, res, next) => {
         console.log("No country given");
         const regions = await Attraction.find({ "region": region });
         if (regions.length === 0) {
-            res.render('attractions/notFound', { region })
+            res.render('attractions/regions/notFound', { region })
         }
-        res.send(regions);
+        //res.send(regions);
+        res.render('attractions/regions/index', { regions })
     }
 })
 
