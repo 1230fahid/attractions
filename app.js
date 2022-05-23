@@ -70,7 +70,9 @@ app.get('/attractions/country', async (req, res, next) => {
         if (countries.length === 0) {
             res.render('attractions/countries/notFound', { country })
         }
-        res.render('attractions/countries/index', { countries })
+        else {
+            res.render('attractions/countries/index', { countries })
+        }
     }
     else if (!country) {
         console.log("No country given");
@@ -79,7 +81,9 @@ app.get('/attractions/country', async (req, res, next) => {
             res.render('attractions/regions/notFound', { region })
         }
         //res.send(regions);
-        res.render('attractions/regions/index', { regions })
+        else {
+            res.render('attractions/regions/index', { regions })
+        }
     }
 })
 
