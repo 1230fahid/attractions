@@ -85,6 +85,17 @@ app.get('/attractions/country', async (req, res, next) => {
             res.render('attractions/regions/index', { regions })
         }
     }
+    else {
+        const attraction = await Attraction.find({ "region": region, "country": country });
+        id = `${region}, ${country}`
+        console.log(id)
+        if (attraction.length == 0) {
+            res.render('attractions/notFound', { id });
+        }
+        else {
+            res.send('Attraction found');
+        }
+    }
 })
 
 app.get('/attractions/:id', async (req, res) => {

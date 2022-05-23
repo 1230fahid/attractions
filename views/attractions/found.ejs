@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate')%>
+    <h1>
+        Attractions in <%=attractions[0].region%>, <%=attractions[0].country%>
+    </h1>
+    <ul>
+        <% for (let attraction of attractions) {%>
+            <div class="card" mb-3>
+                <div class="row">
+                    <div id="images" class="col-md-4">
+                        <img class="img-fluid" alt="" src="<%=attraction.image%>">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%=attraction.name%>
+                            </h5>
+                            <p class="card-text">
+                                <%=attraction.description%>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <%=attraction.region%> - <%=attraction.country%>
+                                </small>
+                            </p>
+                            <a href="/attractions/<%=attraction._id%>" class="btn btn-primary">View
+                                <%=attraction.name%>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+    </ul>
