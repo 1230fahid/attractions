@@ -68,7 +68,7 @@ app.get('/attractions/country', async (req, res, next) => {
         console.log(countries);
         //res.send(countries);
         if (countries.length === 0) {
-            res.render('attractions/notFound', { country })
+            res.render('attractions/countries/notFound', { country })
         }
         res.render('attractions/countries/index', { countries })
     }
