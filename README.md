@@ -11,3 +11,8 @@
             b) When you pick a country, list out the link to the show page for each attraction?
         e. Leave a review for each country?
         f. Search bar at top of page acts like control + f and looks for what text matches?
+    
+05/23/2022:
+    1) What did I do so far?
+        a. Got rid of continent and made it region and country instead
+        b. Created index for regions, countries, and both together, using 'Search' by redirecting
