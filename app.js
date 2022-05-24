@@ -36,31 +36,16 @@ app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.engine('ejs', engine);
 
-app.get("/attractions", async (req, res) => {
-    const attractions = await Attraction.find({});
-    res.render('attractions/index', { attractions });
-})
-
-app.get('/attractions/new', async (req, res) => {
-    res.render('attractions/new')
-})
-
-app.post('/attractions', async (req, res) => {
-    console.log(req.body.attraction)
-    const newAttraction = new Attraction(req.body.attraction);
-    await newAttraction.save();
-    console.log(newAttraction);
+app.get("/", (req, res) => { //placeholder home
     res.redirect('/attractions');
 })
 
-app.get('/attractions/country', async (req, res, next) => {
+app.get("/attractions", async (req, res) => {
     const country = req.query.country; //gets search query
     const region = req.query.region; //gets search query
     if (!region && !country) {
-        //next();
-        //throw new AppError('Wee', 401)
-        //console.log("Hello")
-        res.redirect('/attractions')
+        const attractions = await Attraction.find({});
+        res.render('attractions/index', { attractions });
     }
     else if (!region) {
         console.log("No region given");
@@ -97,6 +82,18 @@ app.get('/attractions/country', async (req, res, next) => {
             res.render('attractions/found', { attractions });
         }
     }
+})
+
+app.get('/attractions/new', async (req, res) => {
+    res.render('attractions/new')
+})
+
+app.post('/attractions', async (req, res) => {
+    console.log(req.body.attraction)
+    const newAttraction = new Attraction(req.body.attraction);
+    await newAttraction.save();
+    console.log(newAttraction);
+    res.redirect('/attractions');
 })
 
 app.get('/attractions/:id', async (req, res) => {
