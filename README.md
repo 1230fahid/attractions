@@ -16,7 +16,13 @@
     1) What did I do so far?
         a. Got rid of continent and made it region and country instead
         b. Created index for regions, countries, and both together, using 'Search' by redirecting
-
+git 
 05/24/2022:
-    1) On branch OD-00001
+    1) On branch dev
     2) Want to add error handlers
+
+05/25/2022:
+    1) On branch OD-00001
+    2) Adding in styling
+        a. Learned to use express.static() to implement statics files, like .css and .js files
+    3) Restructuring and using Flash (Still need to do)
