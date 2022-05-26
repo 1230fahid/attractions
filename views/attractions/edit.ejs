@@ -1,26 +1,32 @@
 <% layout('layouts/boilerplate')%>
     <h1>Edit Attraction</h1>
     <form action="/attractions/<%=attraction._id%>?_method=PUT" method="POST">
-        <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="attraction[name]" value="<%=attraction.name%>">
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="attraction[name]" value="<%=attraction.name%>">
         </div>
-        <div>
-            <label for="region">Region</label>
-            <input type="text" id="region" name="attraction[region]" value="<%=attraction.region%>">
+        <div class="form-group">
+            <label for="region" class="form-label">Region</label>
+            <input type="text" class="form-control" id="region" name="attraction[region]"
+                value="<%=attraction.region%>">
         </div>
-        <div>
-            <label for="country">Country</label>
-            <input type="text" id="country" name="attraction[country]" value="<%=attraction.country%>">
+        <div class="form-group">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="attraction[country]"
+                value="<%=attraction.country%>">
         </div>
-        <div>
-            <label for="description">Description</label>
-            <input type="text" id="description" name="attraction[description]" value="<%=attraction.description%>">
+        <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <br>
+            <!--<input type="text" class="form-control" id="description" name="attraction[description]"
+                value="">-->
+            <textarea name="attraction[description]" id="description" cols="50"
+                rows="3"><%=attraction.description%></textarea>
         </div>
-        <div>
-            <label for="image">Image</label>
-            <input type="text" id="image" name="attraction[image]" value="<%=attraction.image%>">
+        <div class="form-group">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" class="form-control" id="image" name="attraction[image]" value="<%=attraction.image%>">
         </div>
-        <button>Update Attraction</button>
+        <button class="btn btn-outline-success">Update Attraction</button>
     </form>
     <a href="/attractions/<%= attraction._id %>">Back To Attraction</a>

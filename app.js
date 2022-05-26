@@ -1,15 +1,17 @@
-const mongoose = require('mongoose')
-const express = require('express')
-const path = require('path')
+const mongoose = require('mongoose');
+const express = require('express');
+const path = require('path');
 const app = express();
 const methodOverride = require('method-override');
 const Attraction = require('./models/attractions');
 const res = require('express/lib/response');
 const engine = require('ejs-mate');
 const morgan = require('morgan');
-const AppError = require('./Errors/AppError');
+const AppError = require('./utils/AppError.js');
+const catchAsync = require('./utils/catchAsync.js');
+const { attractionSchema } = require('./utils/schemas.js');
+const attractions = require('./routes/attractions.js');
 
-const { nextTick } = require('process');
 app.use(morgan('tiny'));
 
 mongoose.connect('mongodb://localhost:27017/worldAttractions', {}) //set up connection to mongo (still need mongod on powershell). movieApp is an example
@@ -28,96 +30,18 @@ db.once("open", () => {
 });
 
 
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.engine('ejs', engine);
+app.use('/attractions', attractions);
+app.use(express.static(path.join(__dirname, 'public'))) //used to mention the public directory from which I am serving the static files, such as index.css
+//allows you to use static files(css files, js files, etc.)
+
 
 app.get("/", (req, res) => { //placeholder home
-    res.redirect('/attractions');
-})
-
-app.get("/attractions", async (req, res) => {
-    const country = req.query.country; //gets search query
-    const region = req.query.region; //gets search query
-    if (!region && !country) {
-        const attractions = await Attraction.find({});
-        res.render('attractions/index', { attractions });
-    }
-    else if (!region) {
-        console.log("No region given");
-        const countries = await Attraction.find({ "country": country })
-        console.log(countries);
-        //res.send(countries);
-        if (countries.length === 0) {
-            res.render('attractions/countries/notFound', { country })
-        }
-        else {
-            res.render('attractions/countries/index', { countries })
-        }
-    }
-    else if (!country) {
-        console.log("No country given");
-        const regions = await Attraction.find({ "region": region });
-        if (regions.length === 0) {
-            res.render('attractions/regions/notFound', { region })
-        }
-        //res.send(regions);
-        else {
-            res.render('attractions/regions/index', { regions })
-        }
-    }
-    else {
-        const attractions = await Attraction.find({ "region": region, "country": country });
-        id = `${region}, ${country}`
-        console.log(id)
-        if (attractions.length == 0) {
-            res.render('attractions/notFound', { id });
-        }
-        else {
-            //res.send('Attraction found');
-            res.render('attractions/found', { attractions });
-        }
-    }
-})
-
-app.get('/attractions/new', async (req, res) => {
-    res.render('attractions/new')
-})
-
-app.post('/attractions', async (req, res) => {
-    console.log(req.body.attraction)
-    const newAttraction = new Attraction(req.body.attraction);
-    await newAttraction.save();
-    console.log(newAttraction);
-    res.redirect('/attractions');
-})
-
-app.get('/attractions/:id', async (req, res) => {
-    //console.log("Hello")
-    const { id } = req.params;
-    const attraction = await Attraction.findById(id);
-    res.render('attractions/show', { attraction });
-})
-
-app.get('/attractions/:id/edit', async (req, res) => {
-    const attraction = await Attraction.findById(req.params.id);
-    res.render('attractions/edit', { attraction })
-})
-
-app.put('/attractions/:id', async (req, res) => {
-    const { id } = req.params;
-    const attraction = await Attraction.findByIdAndUpdate(id, { ...req.body.attraction })
-    console.log(attraction);
-    res.redirect(`/attractions/${attraction._id}`);
-})
-
-app.delete('/attractions/:id', async (req, res) => {
-    const { id } = req.params;
-    const attraction = await Attraction.findByIdAndDelete(id);
     res.redirect('/attractions');
 })
 

@@ -1,25 +1,33 @@
 <% layout('layouts/boilerplate')%>
+    <h1>New Attraction</h1>
     <form action="/attractions" method="POST">
-        <div>
-            <label for="name">Name</label>
-            <input type="text" , id="name" , name="attraction[name]" required>
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" ,class="form-control" id="name" , name="attraction[name]" required
+                placeholder="Enter Name">
         </div>
-        <div>
-            <label for="region">Region</label>
-            <input type="text" , id="region" , name="attraction[region]" required>
+        <div class="form-group">
+            <label for="region" class="form-label">Region</label>
+            <input type="text" ,class="form-control" id="region" , name="attraction[region]" required
+                placeholder="Enter Region">
         </div>
-        <div>
-            <label for="country">Country</label>
-            <input type="text" , id="country" , name="attraction[country]" required>
+        <div class="form-group">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" ,class="form-control" id="country" , name="attraction[country]" required
+                placeholder="Enter Country">
         </div>
-        <div>
-            <label for="description">Description</label>
-            <input type="text" , id="description" , name="attraction[description]" required>
+        <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <br>
+            <!--<input type="text" ,class="form-control" id="description" , name="attraction[description]" required>-->
+            <textarea name="attraction[description]" id="description" cols="50" rows="3" required
+                placeholder="Enter Description"></textarea>
         </div>
-        <div>
-            <label for="image">Image</label>
-            <input type="text" , id="image" , name="attraction[image]" required>
+        <div class="form-group">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" ,class="form-control" id="image" , name="attraction[image]" required
+                placeholder="Enter URL">
         </div>
-        <button>Add Attraction</button>
+        <button class="btn btn-outline-success">Add Attraction</button>
     </form>
     <a href="/attractions">All Attractions</a>
