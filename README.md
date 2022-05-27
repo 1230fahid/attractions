@@ -16,7 +16,7 @@
     1) What did I do so far?
         a. Got rid of continent and made it region and country instead
         b. Created index for regions, countries, and both together, using 'Search' by redirecting
-git 
+         
 05/24/2022:
     1) On branch dev
     2) Want to add error handlers
