@@ -5,7 +5,8 @@
     <h2 class="display-5">
         <%=attraction.region%> - <%=attraction.country%>
     </h2>
-    <img src="<%=attraction.image%>" class="rounded">
+    <img src="<%=attraction.image%>" class="rounded" onerror="this.onerror=null">
+    <!-- using this means that if there's an error, then the picture won't be displayed-->
     <hr>
     <p class="border border-primary rounded lead">
         <%=attraction.description%>

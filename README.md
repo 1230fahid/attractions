@@ -26,3 +26,11 @@ git
     2) Adding in styling
         a. Learned to use express.static() to implement statics files, like .css and .js files
     3) Restructuring and using Flash (Still need to do)
+
+05/26/2022:
+    1) On branch OD-00001
+    2) Added more styling
+    3) Added in sessions and flash
+    4) What to do next?
+        a. Add in authentication and authorization
+        b. Add in everything else stated in 05/22/2022

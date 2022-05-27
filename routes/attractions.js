@@ -68,12 +68,13 @@ router.get('/new', (req, res) => {
     res.render('attractions/new')
 })
 
-router.post('/attractions', validate, catchAsync(async (req, res) => {
+router.post('/', validate, catchAsync(async (req, res) => {
     console.log(req.body.attraction)
     const newAttraction = new Attraction(req.body.attraction);
     await newAttraction.save();
+    req.flash('success', 'Successfully made a new campground!'); //used to flash
     console.log(newAttraction);
-    res.redirect('/attractions');
+    res.redirect(`/attractions/${newAttraction._id}`);
 }))
 
 router.get('/:id', catchAsync(async (req, res) => {
@@ -92,12 +93,14 @@ router.put('/:id', validate, catchAsync(async (req, res) => {
     const { id } = req.params;
     const attraction = await Attraction.findByIdAndUpdate(id, { ...req.body.attraction })
     console.log(attraction);
+    req.flash('success', 'Successfully made a new campground!'); //used to flash
     res.redirect(`/attractions/${attraction._id}`);
 }))
 
 router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     const attraction = await Attraction.findByIdAndDelete(id);
+    req.flash('success', 'Successfully deleted campground!'); //used to flash
     res.redirect('/attractions');
 }))
 

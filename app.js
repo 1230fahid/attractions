@@ -11,6 +11,9 @@ const AppError = require('./utils/AppError.js');
 const catchAsync = require('./utils/catchAsync.js');
 const { attractionSchema } = require('./utils/schemas.js');
 const attractions = require('./routes/attractions.js');
+const session = require('express-session');
+const flash = require('connect-flash');
+app.use(flash()); //needed to use flash
 
 app.use(morgan('tiny'));
 
@@ -36,11 +39,28 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.engine('ejs', engine);
-app.use('/attractions', attractions);
 app.use(express.static(path.join(__dirname, 'public'))) //used to mention the public directory from which I am serving the static files, such as index.css
 //allows you to use static files(css files, js files, etc.)
 
+const sessionConfig = {
+    secret: 'thisshouldbeabettersecret!',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { //properties for the cookie
+        httpOnly: true, //http only is an additional flag included in a set-cookie http response header. added for security
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //expires a week from now // used for logging in
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+app.use(session(sessionConfig));
 
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success'); //on every single route we're going to take whatever is in the flash under success and have access to it in our locals under the key success
+    res.locals.error = req.flash('error');
+    next();
+})
+
+app.use('/attractions', attractions);
 app.get("/", (req, res) => { //placeholder home
     res.redirect('/attractions');
 })
@@ -54,11 +74,10 @@ app.use('/:id', (req, res) => {
 
 
 app.use((err, req, res, next) => {
-    const { message = 'Something Went Wrong', status = 500 } = err; //destructuring and setting defaults
-    console.log("Hello")
-    console.log(message)
-    res.status(status).send(message)
-    //res.send(message)
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    req.flash('error', 'Could not find attraction');
+    res.status(statusCode).render('attractions/error', { err })
 })
 
 app.listen(3000, () => {
