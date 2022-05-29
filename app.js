@@ -13,8 +13,12 @@ const { attractionSchema } = require('./utils/schemas.js');
 const attractions = require('./routes/attractions.js');
 const session = require('express-session');
 const flash = require('connect-flash');
-app.use(flash()); //needed to use flash
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
+const userRoutes = require('./routes/users');
 
+app.use(flash()); //needed to use flash
 app.use(morgan('tiny'));
 
 mongoose.connect('mongodb://localhost:27017/worldAttractions', {}) //set up connection to mongo (still need mongod on powershell). movieApp is an example
@@ -54,17 +58,48 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig));
 
+app.use(passport.initialize());
+app.use(passport.session()); //make sure session is used before passport.session
+passport.use(new LocalStrategy(User.authenticate())); //authenticate() generates a function that is used in Passport's Local Strategy
+
+passport.serializeUser(User.serializeUser()) //generates a function that is used by passport to serialize users into the session. Refers to how we store a user in the session
+passport.deserializeUser(User.deserializeUser())//generates a function that is used by Passport to deserialize users into the session. How do you get user out of session?
+
+//used for storing a flash to a local key 
 app.use((req, res, next) => {
+    //if (!['/login', '/'].includes(req.originalUrl)) {
+    //    req.session.returnTo = req.originalUrl;
+    //}
+    //console.log(req.session)
+    res.locals.currentUser = req.user; //gets user info on every route, so long as there is a user
     res.locals.success = req.flash('success'); //on every single route we're going to take whatever is in the flash under success and have access to it in our locals under the key success
     res.locals.error = req.flash('error');
     next();
 })
 
+app.use('/fakeUser', async (req, res) => {
+    const user = new User({ email: 'fahid@gmail.com', username: 'fahid' });
+    const newUser = await User.register(user, 'chicken') //takes in instance of user model, and password. this registers a user
+    res.send(newUser);
+})
+
+app.use('/', userRoutes);
 app.use('/attractions', attractions);
 app.get("/", (req, res) => { //placeholder home
     res.redirect('/attractions');
 })
-
+app.get('/logout', catchAsync(async (req, res, next) => {
+    req.logout(err => {
+        if (err) {
+            return next(err);
+        }
+    });
+    req.flash('success', 'Welcome Back')
+    console.log("Hello")
+    req.flash("success", "Goodbye")
+    req.flash("error", 'Error')
+    res.redirect('/attractions');
+}))
 app.use('/:id', (req, res) => {
     const { id } = req.params;
     console.log("ID is", id);
@@ -72,7 +107,7 @@ app.use('/:id', (req, res) => {
     //res.status(404).send('NOT FOUND!'); // can send 404 if request is not found, by using this at end of file
 })
 
-
+//error handler
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'

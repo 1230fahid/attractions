@@ -5,7 +5,11 @@ const catchAsync = require('../utils/catchAsync.js');
 const Attraction = require('../models/attractions');
 const { attractionSchema } = require('../utils/schemas.js');
 const router = express.Router();
+const { isLoggedIn } = require('../middleware.js');
 //make sure to include everything you needed to include originally in app.js for these routes
+
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' })
 
 const validate = (req, res, next) => {
     const { error } = attractionSchema.validate(req.body);
@@ -64,11 +68,11 @@ router.get("/", catchAsync(async (req, res, next) => {
     }
 }))
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('attractions/new')
 })
 
-router.post('/', validate, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validate, catchAsync(async (req, res) => {
     console.log(req.body.attraction)
     const newAttraction = new Attraction(req.body.attraction);
     await newAttraction.save();
@@ -77,19 +81,19 @@ router.post('/', validate, catchAsync(async (req, res) => {
     res.redirect(`/attractions/${newAttraction._id}`);
 }))
 
-router.get('/:id', catchAsync(async (req, res) => {
+router.get('/:id', isLoggedIn, catchAsync(async (req, res) => {
     //console.log("Hello")
     const { id } = req.params;
     const attraction = await Attraction.findById(id);
     res.render('attractions/show', { attraction });
 }))
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     const attraction = await Attraction.findById(req.params.id);
     res.render('attractions/edit', { attraction })
 }))
 
-router.put('/:id', validate, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, validate, catchAsync(async (req, res) => {
     const { id } = req.params;
     const attraction = await Attraction.findByIdAndUpdate(id, { ...req.body.attraction })
     console.log(attraction);
