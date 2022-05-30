@@ -41,18 +41,21 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
     const redirectUrl = req.session.returnTo;
     //res.redirect('/attractions')
     console.log('redirect URL is', redirectUrl);
-    res.redirect('/attractions');
+    res.redirect(redirectUrl);
 })
 
 router.get('/logout', async (req, res) => {
     try {
-        req.logOut(function (err) {
+        /*req.logout(function (err) {
             if (err) {
                 return next(err);
             }
             req.flash('success', 'Logged out!');
             res.redirect('/attractions')
-        });
+        });*/
+        req.logout(); //need this for passport 0.5.3
+        req.flash('success', 'Logged out!');
+        res.redirect('/attractions')
     }
     catch (e) {
         req.flash('error', e.message);

@@ -5,7 +5,7 @@ module.exports.isLoggedIn = (req, res, next) => { //log in middleware
         req.session.returnTo = req.originalUrl; //store the URL they are requesting, by adding the originalUrl to a new parameter 'returnTo'!
         console.log('req.session.returnTo in isLoggedIn is', req.session.returnTo);
         req.flash('error', 'You must be signed in first!');
-        res.redirect('/login');
+        return res.redirect('/login');
     }
     else {
         next();
