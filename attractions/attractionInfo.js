@@ -1,5 +1,6 @@
 module.exports = [
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Eiffel Tower",
         "region": "Paris",
         "country": "France",
@@ -7,6 +8,7 @@ module.exports = [
         "image": "https://www.planetware.com/photos-large/F/eiffel-tower.jpg"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "The Colosseum",
         "region": "Rome",
         "country": "Italy",
@@ -14,6 +16,7 @@ module.exports = [
         "image": "https://th-thumbnailer.cdn-si-edu.com/EGlRCQCtiJBinJZPq-6nKBxWW0A=/fit-in/1600x0/filters:focal(2183x1356:2184x1357)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/41/4f/414f4c9f-b197-4778-9dc6-2a0105cc2908/colosseum_in_rome-april_2007-1-_copie_2b.jpg"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Statue of Liberty",
         "region": "New York",
         "country": "United States",
@@ -21,6 +24,7 @@ module.exports = [
         "image": "https://i.guim.co.uk/img/media/4a29dde46c17e8a07f98e4e5947d49964d074923/0_348_6000_3600/master/6000.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=88c75e6319ec9d3588bb6e17ae92ff68"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Machu Picchu",
         "region": "Andes Mountains",
         "country": "Peru",
@@ -28,6 +32,7 @@ module.exports = [
         "image": "https://images.ctfassets.net/cnu0m8re1exe/6Xf1pu8Tv0tPTAiPjOs0es/13b2238fd3ea11fd658ad71596d28abd/shutterstock_1387848629.jpg?fm=jpg&fl=progressive&w=660&h=433&fit=fill"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Taj Mahal",
         "region": "Agra",
         "country": "India",
@@ -35,6 +40,7 @@ module.exports = [
         "image": "https://th-thumbnailer.cdn-si-edu.com/NaExfGA1op64-UvPUjYE5ZqCefk=/fit-in/1600x0/filters:focal(1471x1061:1472x1062)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/b6/30/b630b48b-7344-4661-9264-186b70531bdc/istock-478831658.jpg"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "The Great Pyramid of Giza",
         "region": "Giza Necropolis",
         "country": "Egypt",
@@ -42,6 +48,7 @@ module.exports = [
         "image": "https://www.planetware.com/photos-large/EGY/egypt-cairo-pyramids-of-giza-and%20camels-2.jpg"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Great Wall of China",
         "region": "Beijing",
         "country": "China",
@@ -49,6 +56,7 @@ module.exports = [
         "image": "https://www.planetware.com/wpimages/2020/08/top-attractions-in-the-world-china-great-wall.jpg"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Grand Canyon",
         "region": "Arizona",
         "country": "United States",
@@ -56,6 +64,7 @@ module.exports = [
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Canyon_River_Tree_%28165872763%29.jpeg/800px-Canyon_River_Tree_%28165872763%29.jpeg"
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Stonehenge",
         "region": "Salisbury",
         "country": "England",
@@ -64,6 +73,7 @@ module.exports = [
 
     },
     {
+        "author": "6292827f8efbc4d17b219444",
         "name": "Mount Fuji",
         "region": "Shizuoka",
         "country": "Japan",

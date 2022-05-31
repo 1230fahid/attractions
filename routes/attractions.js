@@ -11,7 +11,8 @@ const { isLoggedIn } = require('../middleware.js');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' })
 
-const validate = (req, res, next) => {
+const validateAttraction = (req, res, next) => {
+    console.log("req.body is", req.body)
     const { error } = attractionSchema.validate(req.body);
     console.log("Error is", error)
     if (error) {
@@ -72,9 +73,11 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('attractions/new')
 })
 
-router.post('/', isLoggedIn, validate, catchAsync(async (req, res) => {
-    console.log(req.body.attraction)
+router.post('/', isLoggedIn, validateAttraction, catchAsync(async (req, res) => {
+    console.log("req.body.attractions is", req.body.attraction)
+    console.log("req.user is", req.user)
     const newAttraction = new Attraction(req.body.attraction);
+    newAttraction.author = req.user._id;
     await newAttraction.save();
     req.flash('success', 'Successfully made a new campground!'); //used to flash
     console.log(newAttraction);
@@ -84,7 +87,8 @@ router.post('/', isLoggedIn, validate, catchAsync(async (req, res) => {
 router.get('/:id', isLoggedIn, catchAsync(async (req, res) => {
     //console.log("Hello")
     const { id } = req.params;
-    const attraction = await Attraction.findById(id);
+    //const attraction = await Attraction.findById(id);
+    const attraction = await Attraction.findById(id).populate('reviews').populate('author'); //this populates the reviews array with the review parameters for each attraction, as well as the author of each attraction
     res.render('attractions/show', { attraction });
 }))
 
@@ -93,11 +97,11 @@ router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     res.render('attractions/edit', { attraction })
 }))
 
-router.put('/:id', isLoggedIn, validate, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, validateAttraction, catchAsync(async (req, res) => {
     const { id } = req.params;
     const attraction = await Attraction.findByIdAndUpdate(id, { ...req.body.attraction })
     console.log(attraction);
-    req.flash('success', 'Successfully made a new campground!'); //used to flash
+    req.flash('success', 'Successfully edited campground!'); //used to flash
     res.redirect(`/attractions/${attraction._id}`);
 }))
 

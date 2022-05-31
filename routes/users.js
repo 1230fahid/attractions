@@ -38,9 +38,10 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => { //authenticate passport on localhost with certain parameters
     req.flash('success', 'Welcome Back');
     console.log(req.session);
-    const redirectUrl = req.session.returnTo;
+    const redirectUrl = req.session.returnTo || '/attractions/';
     //res.redirect('/attractions')
     console.log('redirect URL is', redirectUrl);
+    req.session.returnTo = '' //had to add this because it stopped changing
     res.redirect(redirectUrl);
 })
 

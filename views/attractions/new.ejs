@@ -1,31 +1,28 @@
 <% layout('layouts/boilerplate')%>
     <h1 class="text-center">New Attraction</h1>
-    <form action="/attractions" method="POST" enctype="multipart/form-data">
+    <form action="/attractions" method="POST" novalidate class="validated-form">
         <div class="form-group">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="attraction[name]" required placeholder="Enter Name">
+            <input type="text" class="form-control" id="name" name="attraction[name]" placeholder="Enter Name">
         </div>
         <div class="form-group">
             <label for="region" class="form-label">Region</label>
-            <input type="text" class="form-control" id="region" name="attraction[region]" required
-                placeholder="Enter Region">
+            <input type="text" class="form-control" id="region" name="attraction[region]" placeholder="Enter Region">
         </div>
         <div class="form-group">
             <label for="country" class="form-label">Country</label>
-            <input type="text" class="form-control" id="country" name="attraction[country]" required
-                placeholder="Enter Country">
+            <input type="text" class="form-control" id="country" name="attraction[country]" placeholder="Enter Country">
         </div>
         <div class="form-group">
             <label for="description" class="form-label">Description</label>
             <br>
             <!--<input type="text" ,class="form-control" id="description" , name="attraction[description]" required>-->
-            <textarea name="attraction[description]" id="description" cols="50" rows="3" required
-                placeholder="Enter Description" class="form-control"></textarea>
+            <textarea name="attraction[description]" id="description" cols="50" rows="3" placeholder="Enter Description"
+                class="form-control"></textarea>
         </div>
         <div class="form-group">
             <label for="image" class="form-label">Image</label>
-            <input type="text" class="form-control" id="image" name="attraction[image]" required
-                placeholder="Enter URL">
+            <input type="text" class="form-control" id="image" name="attraction[image]" placeholder="Enter URL">
         </div>
         <button class="btn btn-outline-success">Add Attraction</button>
     </form>

@@ -8,7 +8,7 @@ const res = require('express/lib/response');
 const engine = require('ejs-mate');
 const morgan = require('morgan');
 const AppError = require('./utils/AppError.js');
-const catchAsync = require('./utils/catchAsync.js');
+//const catchAsync = require('./utils/catchAsync.js');
 const { attractionSchema } = require('./utils/schemas.js');
 const attractions = require('./routes/attractions.js');
 const session = require('express-session');
@@ -17,6 +17,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const userRoutes = require('./routes/users');
+const Review = require('./models/review');
+const reviews = require('./routes/reviews');
 
 app.use(flash()); //needed to use flash
 app.use(morgan('tiny'));
@@ -85,10 +87,11 @@ app.use('/fakeUser', async (req, res) => {
 
 app.use('/', userRoutes);
 app.use('/attractions', attractions);
+app.use('/attractions/:id/reviews', reviews);
 app.get("/", (req, res) => { //placeholder home
     res.redirect('/attractions');
 })
-app.get('/logout', catchAsync(async (req, res, next) => {
+/*app.get('/logout', catchAsync(async (req, res, next) => {
     req.logout(err => {
         if (err) {
             return next(err);
@@ -99,7 +102,7 @@ app.get('/logout', catchAsync(async (req, res, next) => {
     req.flash("success", "Goodbye")
     req.flash("error", 'Error')
     res.redirect('/attractions');
-}))
+}))*/
 app.use('/:id', (req, res) => {
     const { id } = req.params;
     console.log("ID is", id);

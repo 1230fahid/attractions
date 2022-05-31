@@ -10,3 +10,10 @@ module.exports.attractionSchema = Joi.object({
         image: Joi.string().required()
     }).required()
 });
+
+module.exports.reviewSchema = Joi.object({
+    review: Joi.object({
+        body: Joi.string().required(),
+        rating: Joi.number().required()
+    }).required()
+});

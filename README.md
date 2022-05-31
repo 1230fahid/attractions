@@ -39,3 +39,11 @@
     1) Currently in dev
     2) Merged OD-00001 to dev
     3) Added authentication
+
+05/30/2022:
+    1) Added review model
+    2) Focused on debugging errors
+    3) On branch dev
+    4) Adding author
+    5) Added public/assets/validateForms.js
+    6) Added styling for review and author

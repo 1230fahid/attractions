@@ -1,24 +1,62 @@
 <% layout('layouts/boilerplate')%>
-    <h1 class="card-title" font-family="Arial">
-        <%=attraction.name%>
-    </h1>
-    <h2 class="display-5">
-        <%=attraction.region%> - <%=attraction.country%>
-    </h2>
-    <img src="<%=attraction.image%>" class="rounded" onerror="this.onerror=null">
-    <!-- using this means that if there's an error, then the picture won't be displayed-->
-    <hr>
-    <p class="border border-primary rounded lead">
-        <%=attraction.description%>
-    </p>
-    <p>
-        <a href="/attractions/<%=attraction._id%>/edit">Edit</a>
-    </p>
-    <p>
-    <form action="/attractions/<%=attraction._id%>?_method=DELETE" method="POST">
-        <button>Delete</button>
-    </form>
-    </p>
+    <div class="row">
+        <div class="col-6">
+            <div class="card mb-3">
+                <h1 class="card-title" font-family="Arial">
+                    <%=attraction.name%>
+                </h1>
+                <h2 class="display-5">
+                    <%=attraction.region%> - <%=attraction.country%>
+                </h2>
+                <img src="<%=attraction.image%>" class="rounded" onerror="this.onerror=null">
+                <!-- using this means that if there's an error, then the picture won't be displayed-->
+                <hr>
+                <p class="border border-primary rounded lead card-text">
+                    <%=attraction.description%>
+                </p>
+                <p>
+                    <a href="/attractions/<%=attraction._id%>/edit">Edit</a>
+                </p>
+            </div>
+            <p class="font-weight-light font-italic">Submitted by: <%= attraction.author.username %>
+                    <div>
+                        <form action="/attractions/<%=attraction._id%>?_method=DELETE" method="POST"
+                            class="validated-form">
+                            <button>Delete</button>
+                        </form>
+                    </div>
+            </p>
+        </div>
+
+        <div class="col-6">
+            <h2>Leave a Review</h2>
+            <form action="/attractions/<%=attraction._id%>/reviews" method="POST" class="mb-5 validated-form">
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+                </div>
+                <div class="mb-3">
+                    <label for="body" class="form-label">Review</label>
+                    <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"></textarea>
+                </div>
+                <button class="btn btn-success">Submit</button>
+            </form>
+            <% for (let review of attraction.reviews) { %>
+                <div class="card mb-3">
+                    <div class="mb-3 card-body">
+                        <h5 class="card-title">Rating: <%=review.rating%>
+                        </h5>
+                        <p class="card-text">Review: <%=review.body%>
+                        </p>
+                    </div>
+                    <form action="/attractions/<%=attraction._id%>/reviews/<%=review._id%>?_method=DELETE"
+                        method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+                <%}%>
+        </div>
+    </div>
     <footer>
         <a href="/attractions">All Attractions</a>
     </footer>
