@@ -6,34 +6,11 @@ const Review = require('../models/review');
 const AppError = require('../utils/AppError');
 const { reviewSchema } = require('../utils/schemas');
 const methodOverride = require('method-override');
+const { validateReview, isLoggedIn, isReviewAuthor } = require('../middleware')
+const reviews = require('../controllers/reviews');
 
-const validateReview = (req, res, next) => {
-    const { error } = reviewSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',');
-        throw new AppError(msg, 400)
-    }
-    else {
-        next();
-    }
-}
+router.post('/', isLoggedIn, validateReview, catchAsync(reviews.index));
 
-
-router.post('/', validateReview, catchAsync(async (req, res) => {
-    const attraction = await Attraction.findById(req.params.id);
-    const review = new Review(req.body.review);
-    await review.save();
-    attraction.reviews.push(review);
-    await attraction.save();
-    req.flash('success', 'Review Submitted!')
-    res.redirect(`/attractions/${attraction._id}`);
-}))
-
-router.delete('/:reviewId', catchAsync(async (req, res) => {
-    const { id, reviewId } = req.params;
-    await Attraction.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/attractions/${id}`);
-}))
+router.delete('/:reviewId', catchAsync(reviews.destroyReview))
 
 module.exports = router;

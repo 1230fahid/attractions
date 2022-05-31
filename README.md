@@ -41,9 +41,15 @@
     3) Added authentication
 
 05/30/2022:
-    1) Added review model
-    2) Focused on debugging errors
-    3) On branch dev
+    1) On branch dev
+    2) Added review model
+    3) Focused on debugging errors
     4) Adding author
     5) Added public/assets/validateForms.js
     6) Added styling for review and author
+
+05/31/2022:
+    1) On branch dev
+    2) Added author for reviews and attractions
+    3) Added controllers files (following MVC pattern)
+    4) Added star ratings
