@@ -1,0 +1,18 @@
+#pages {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#btn {
+    border-color: green;
+    background-color: black;
+    color: green;
+    border-radius: 20%;
+    margin-right: 5px;
+}
+
+#btn:hover{
+    background-color: green;
+    color:white;
+}

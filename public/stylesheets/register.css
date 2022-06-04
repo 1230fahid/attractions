@@ -1,0 +1,34 @@
+#register {
+    /*border-style: solid;*/
+    padding-bottom: 10px;    
+    color:white;
+    /*background-image: url('https://wallpaperaccess.com/full/2131.jpg');
+    border-color: lightgreen;*/
+    font-family: 'Nuosu SIL', serif;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Nuosu SIL', serif;
+}
+
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.form-control {
+    border-radius: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bojnice-castle-1603142898.jpg?crop=1.00xw:0.752xh;0,0.0240xh&resize=1200:*');
+    background-size: cover;
+}

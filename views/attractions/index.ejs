@@ -1,33 +1,57 @@
 <% layout('layouts/boilerplate')%>
+<link rel="stylesheet" href="/stylesheets/index.css">
+<link rel="stylesheet" href="/stylesheets/pages.css">
+    <div id="map" style="width: 100%; height: 500px"></div>
     <!--All of this content will be passed to out boiler plate template as 'body'-->
     <h1>All Attractions</h1>
     <a href="/attractions/new">Add Attraction</a>
     <ul>
-        <% for (let attraction of attractions) {%>
-            <div class="card">
+        <% for (let i = (page-1)*10; i < page*10; i++) {%>
+            <% if (i == attractions.length) {%>
+                <% break %>
+            <%}%>
+            <div class="card bg-dark">
                 <div class="row">
                     <div id="images" class="col-md-4">
-                        <img class="img-fluid" alt="" src="<%=attraction.image%>">
+                        <img class="img-fluid img-thumbnail" alt="" src="<%=attractions[i].images[0].url%>">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <%=attraction.name%>
+                                <%=attractions[i].name%>
                             </h5>
                             <p class="card-text">
-                                <%=attraction.description%>
+                                <%=attractions[i].description%>
                             </p>
                             <p class="card-text">
                                 <small class="text-muted">
-                                    <%=attraction.region%> - <%=attraction.country%>
+                                    <%=attractions[i].region%> - <%=attractions[i].country%>
                                 </small>
                             </p>
-                            <a href="/attractions/<%=attraction._id%>" class="btn btn-primary">View
-                                <%=attraction.name%>
+                            <a href="/attractions/<%=attractions[i]._id%>" class="btn btn-primary">View
+                                <%=attractions[i].name%>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <%}%>
+        <%}%>
     </ul>
+
+    <div id="pages">
+        <% if(page == 1) {%>
+            <%if (attractions.length > 10) {%>
+                <a href="/attractions?page=<%=parseInt(page)+1%>" class="btn btn-primary mb-1" id="btn">></a>
+            <%}%>
+        <%} else if((attractions.length > ((page-1) * 10)) && (attractions.length <= (page * 10))) {%>
+            <a href="/attractions?page=<%=parseInt(page)-1%>" class="btn btn-primary mb-1" id="btn"><</a>
+        <%} else {%>
+            <a href="/attractions?page=<%=parseInt(page)-1%>" class="btn btn-primary mb-1" id="btn"><</a>
+            <a href="/attractions?page=<%=parseInt(page)+1%>" class="btn btn-primary mb-1" id="btn">></a>
+        <%}%>
+    </div>
+
+    <script>
+        const attractions = {features: <%- JSON.stringify(attractions)%>}
+    </script>
+    <script src="/assets/clusterMap.js"></script>

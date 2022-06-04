@@ -1,0 +1,10 @@
+body{
+    color:red;
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://wallpaperaccess.com/full/2131.jpg');
+}
+
+#error{
+    background-color: lightpink;
+    border:1px solid lightpink;
+    border-radius: 10px;
+}

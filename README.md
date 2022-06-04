@@ -53,3 +53,14 @@
     2) Added author for reviews and attractions
     3) Added controllers files (following MVC pattern)
     4) Added star ratings
+
+06/01/2022-06/04/2022:
+    1) Added image uploading
+    2) Added security
+    3) Added maps using geocoding, mapbox, etc.
+    4) Added page index
+    5) Cleaned up styles, and did more frontend.
+    6) Added home page
+    
+    What next:
+        Basically done, but I want to keep adding my own styles and really make it unique for me.

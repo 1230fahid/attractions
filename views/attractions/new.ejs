@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate')%>
+    <div class="px-5">
     <h1 class="text-center">New Attraction</h1>
-    <form action="/attractions" method="POST" novalidate class="validated-form">
+    <form action="/attractions" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="attraction[name]" placeholder="Enter Name">
@@ -20,10 +21,28 @@
             <textarea name="attraction[description]" id="description" cols="50" rows="3" placeholder="Enter Description"
                 class="form-control"></textarea>
         </div>
+
+        <p class="mb-1">Add Images</p>
+        <div class="input-group">
+            <div class="custom-file mb-3">
+                <!--<label for="images" class="input-group-text">Add Images</label>-->
+                <input type="file" class="custom-file-input" name="images" id="images" multiple>
+                <label class="custom-file-label" for="images" id="image_label">Choose file(s)...</label>
+            </div>
+        </div>
+
+        <!--<div class="form-group">
+            <input type="file" class="form-file-input" name="images" id="images" multiple="multiple">
+            <div> -->
+        <!--
         <div class="form-group">
             <label for="image" class="form-label">Image</label>
             <input type="text" class="form-control" id="image" name="attraction[image]" placeholder="Enter URL">
         </div>
-        <button class="btn btn-outline-success">Add Attraction</button>
+        -->
+        <button class="btn btn-outline-success mt-3 mb-3" id="btn">Add Attraction</button>
     </form>
+    <br>
     <a href="/attractions">All Attractions</a>
+    </div>
+    <script src="/assets/countInputFiles.js"></script>

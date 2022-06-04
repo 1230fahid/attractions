@@ -8,21 +8,30 @@ const router = express.Router();
 const { isLoggedIn, isAuthor } = require('../middleware.js');
 //make sure to include everything you needed to include originally in app.js for these routes
 
+const { storage } = require('../cloudinary'); //node automatically looks for an index.js in a folder, if no specific file in a folder is given
+
 const { validateAttraction } = require('../middleware')
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' })
+//const upload = multer({ dest: 'uploads/' })
+const upload = multer({ storage }) //change new upload to storage
 
 const attractions = require('../controllers/attractions');
 
 router.route('/')
     .get(catchAsync(attractions.index))
-    .post(isLoggedIn, validateAttraction, catchAsync(attractions.newAttraction))
+    .post(isLoggedIn, upload.array('images'), validateAttraction, catchAsync(attractions.newAttraction))
+/*.post(upload.single('image'), (req, res) => { //'image' is the input name. must match the name of an input
+    console.log(req.body, req.file);
+    res.send("IT WORKED!");
+})*/
+
+//can do upload.array for multiple images
 
 router.get('/new', isLoggedIn, attractions.renderNewForm)
 
 router.route('/:id')
     .get(isLoggedIn, catchAsync(attractions.showAttraction))
-    .put(isLoggedIn, isAuthor, validateAttraction, catchAsync(attractions.updateAttraction))
+    .put(isLoggedIn, isAuthor, upload.array('images'), validateAttraction, catchAsync(attractions.updateAttraction))
     .delete(isAuthor, catchAsync(attractions.destroyAttraction))
 
 //router.get("/", catchAsync(attractions.index));

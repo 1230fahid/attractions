@@ -1,29 +1,36 @@
 <% layout('layouts/boilerplate')%>
+<link rel="stylesheet" href="/stylesheets/index.css">
+<link rel="stylesheet" href="/stylesheets/pages.css">
+
+<div id="map" style="width: 100%; height: 500px"></div>
     <h1>
         Attractions in region: <%=regions[0].region%>
     </h1>
     <ul>
-        <% for (let region of regions) {%>
-            <div class="card" mb-3>
+        <% for (let i = (page-1)*10; i < page*10; i++) {%>
+            <% if (i == regions.length) {%>
+                <% break %>
+            <%}%>
+            <div class="card bg-dark" mb-3>
                 <div class="row">
                     <div id="images" class="col-md-4">
-                        <img class="img-fluid" alt="" src="<%=region.image%>">
+                        <img class="img-fluid" alt="" src="<%=regions[i].images[0].url%>">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <%=region.name%>
+                                <%=regions[i].name%>
                             </h5>
                             <p class="card-text">
-                                <%=region.description%>
+                                <%=regions[i].description%>
                             </p>
                             <p class="card-text">
                                 <small class="text-muted">
-                                    <%=region.region%> - <%=region.country%>
+                                    <%=regions[i].region%> - <%=regions[i].country%>
                                 </small>
                             </p>
-                            <a href="/attractions/<%=region._id%>" class="btn btn-primary">View
-                                <%=region.name%>
+                            <a href="/attractions/<%=regions[i]._id%>" class="btn btn-primary">View
+                                <%=regions[i].name%>
                             </a>
                         </div>
                     </div>
@@ -31,3 +38,21 @@
             </div>
             <%}%>
     </ul>
+
+    <div id="pages">
+        <% if(page == 1) {%>
+            <%if (regions.length > 10) {%>
+                <a href="/attractions?page=<%=parseInt(page)+1%>&region=<%=regions[0].region%>&country=" class="btn btn-primary mb-1" id="btn">></a>
+            <%}%>
+        <%} else if((regions.length > ((page-1) * 10)) && (regions.length <= (page * 10))) {%>
+            <a href="/attractions?page=<%=parseInt(page)-1%>&region=<%=regions[0].region%>&country=" class="btn btn-primary mb-1" id="btn"><</a>
+        <%} else {%>
+            <a href="/attractions?page=<%=parseInt(page)-1%>&region=<%=regions[0].region%>&country=" class="btn btn-primary mb-1" id="btn"><</a>
+            <a href="/attractions?page=<%=parseInt(page)+1%>&region=<%=regions[0].region%>&country=" class="btn btn-primary mb-1" id="btn">></a>
+        <%}%>
+    </div>
+
+    <script>
+        const attractions = {features: <%- JSON.stringify(regions)%>}
+    </script>
+    <script src="/assets/clusterMap.js"></script>

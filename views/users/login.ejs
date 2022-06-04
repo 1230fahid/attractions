@@ -1,19 +1,34 @@
 <% layout('layouts/boilerplate')%>
-    <h1>Login</h1>
-    <form action="/login" method="POST" novalidate class="validated-form">
-        <div class="form-group">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-            <div class="valid-feedback">
-                Looks good!
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&family=Nuosu+SIL&family=Radio+Canada:wght@300&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/stylesheets/login.css">
+
+<div class="row">
+    <!--<div class="col-6">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla laudantium quis veniam quibusdam tempore expedita, aperiam asperiores commodi voluptate porro facere, ab consequatur blanditiis perspiciatis voluptas fuga, ea hic nesciunt?</p>
+    </div>-->
+    <div class="col-6" id="login">
+        <h1>Login</h1>
+        <form action="/login" method="POST" novalidate class="validated-form">
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+                <div class="valid-feedback"> 
+                    Looks good!
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <div class="valid-feedback">
-                Looks good!
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
             </div>
-        </div>
-        <button class="btn btn-success">Login</button>
-    </form>
+            <div class="button">
+                <button class="btn btn-success">Login</button>
+            </div>
+        </form>
+    </div>
+</div>

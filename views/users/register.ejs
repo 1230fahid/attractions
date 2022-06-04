@@ -1,26 +1,37 @@
 <% layout('layouts/boilerplate')%>
-    <h1>Register</h1>
-    <form action="/register" method="POST" class="validated-form" novalidate>
-        <div class="form-group">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-            <div class="valid-feedback">
-                Looks good!
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&family=Nuosu+SIL&family=Radio+Canada:wght@300&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/stylesheets/register.css">
+
+<div class="row">
+    <div class="col-6" id="register">
+        <h1>Register</h1>
+        <form action="/register" method="POST" class="validated-form" novalidate>
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-            <div class="valid-feedback">
-                Looks good!
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-            <div class="valid-feedback">
-                Looks good!
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
             </div>
-        </div>
-        <button class="btn btn-success">Register</button>
-    </form>
+            <button class="btn btn-success">Register</button>
+        </form>
+    </div>
+</div>

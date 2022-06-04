@@ -1,0 +1,34 @@
+#login {
+    /*border-style: solid;*/
+    padding-bottom: 10px;    
+    color:white;
+    /*background-image: url('https://wallpaperaccess.com/full/2131.jpg');
+    border-color: lightgreen;*/
+    font-family: 'Nuosu SIL', serif;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Nuosu SIL', serif;
+}
+
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.form-control {
+    border-radius: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+body {
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('https://a.cdn-hotels.com/gdcs/production29/d372/b70fa24d-b7b9-491a-a67a-8da0857b80a2.jpg');
+    background-size: cover;
+}

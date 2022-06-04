@@ -1,3 +1,9 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+console.log(process.env.CLOUDINARY_SECRET);
+console.log(process.env.CLOUDINARY_KEY);
+
 const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
@@ -20,8 +26,13 @@ const userRoutes = require('./routes/users');
 const Review = require('./models/review');
 const reviews = require('./routes/reviews');
 
+const mongoSanitize = require('express-mongo-sanitize');
+//const helmet = require('helmet');
+
+
 app.use(flash()); //needed to use flash
 app.use(morgan('tiny'));
+//app.use(helmet({contentSecurityPolicy: false}));
 
 mongoose.connect('mongodb://localhost:27017/worldAttractions', {}) //set up connection to mongo (still need mongod on powershell). movieApp is an example
     .then(() => {
@@ -48,12 +59,16 @@ app.engine('ejs', engine);
 app.use(express.static(path.join(__dirname, 'public'))) //used to mention the public directory from which I am serving the static files, such as index.css
 //allows you to use static files(css files, js files, etc.)
 
+app.use(mongoSanitize());
+
 const sessionConfig = {
+    //name: 'blah' //changes name of the cookie
     secret: 'thisshouldbeabettersecret!',
     resave: false,
     saveUninitialized: true,
     cookie: { //properties for the cookie
-        httpOnly: true, //http only is an additional flag included in a set-cookie http response header. added for security
+        httpOnly: true, //http only is an additional flag included in a set-cookie http response header. added for security. our cookies are only accessible through http
+        //secure: true, //makes it so that cookie is only accessible or changeable through https
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //expires a week from now // used for logging in
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -89,7 +104,7 @@ app.use('/', userRoutes);
 app.use('/attractions', attractions);
 app.use('/attractions/:id/reviews', reviews);
 app.get("/", (req, res) => { //placeholder home
-    res.redirect('/attractions');
+    res.render('home.ejs');
 })
 /*app.get('/logout', catchAsync(async (req, res, next) => {
     req.logout(err => {
