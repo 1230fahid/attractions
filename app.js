@@ -116,11 +116,12 @@ app.engine('ejs', engine);
 app.use(express.static(path.join(__dirname, 'public'))) 
 
 app.use(mongoSanitize());
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!'
 
 const store = MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/worldAttractions',
+    mongoUrl: dbURL,
     crypto: {
-        secret: 'thisshouldbeabettersecret!',
+        secret,
     },
     touchAfter: 24 * 3600
 })
@@ -131,7 +132,7 @@ store.on("error", function(e) {
 
 const sessionConfig = {
     store,
-    secret: 'thisshouldbeabettersecret!',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: { //properties for the cookie
