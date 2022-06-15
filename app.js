@@ -4,6 +4,8 @@ if (process.env.NODE_ENV !== "production") {
 console.log(process.env.CLOUDINARY_SECRET);
 console.log(process.env.CLOUDINARY_KEY);
 
+
+
 const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
@@ -27,13 +29,69 @@ const Review = require('./models/review');
 const reviews = require('./routes/reviews');
 
 const mongoSanitize = require('express-mongo-sanitize');
-//const helmet = require('helmet');
+const helmet = require('helmet');
 
+const MongoStore = require("connect-mongo");
 
 app.use(flash()); //needed to use flash
 app.use(morgan('tiny'));
-//app.use(helmet({contentSecurityPolicy: false}));
 
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+    "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+    "https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js",
+    "https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.mapbox.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css",
+    "https://fonts.gstatic.com",
+    "https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&family=Nuosu+SIL&family=Radio+Canada:wght@300&display=swap",
+    "https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500&family=Nuosu+SIL&family=Open+Sans:wght@700&family=Radio+Canada:wght@300&display=swap",
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/dxbaj75pt/",
+                "https://images.unsplash.com/",
+                "https://a.cdn-hotels.com/gdcs/production29/d372/b70fa24d-b7b9-491a-a67a-8da0857b80a2.jpg",
+                'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bojnice-castle-1603142898.jpg',
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
+
+const dbURL = process.env.DB_URL;
+//'mongodb://localhost:27017/worldAttractions'
 mongoose.connect('mongodb://localhost:27017/worldAttractions', {}) //set up connection to mongo (still need mongod on powershell). movieApp is an example
     .then(() => {
         console.log("CONNECTION OPEN!!!!");
@@ -61,8 +119,22 @@ app.use(express.static(path.join(__dirname, 'public'))) //used to mention the pu
 
 app.use(mongoSanitize());
 
+const store = MongoStore.create({ //stores session in mongo
+    mongoUrl: 'mongodb://localhost:27017/worldAttractions',
+    crypto: {
+        secret: 'thisshouldbeabettersecret!',
+    },
+    touchAfter: 24 * 3600
+})
+
+store.on("error", function(e) {
+    console.log("SESSION STORE ERROR", e)
+})
+
 const sessionConfig = {
     //name: 'blah' //changes name of the cookie
+    //store, //uses whatever is passed to store info
+    store,
     secret: 'thisshouldbeabettersecret!',
     resave: false,
     saveUninitialized: true,

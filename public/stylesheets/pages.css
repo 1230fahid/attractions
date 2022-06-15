@@ -5,14 +5,14 @@
 }
 
 #btn {
-    border-color: green;
+    border-color: red;
     background-color: black;
-    color: green;
-    border-radius: 20%;
+    color: red;
+    border-radius: 100%;
     margin-right: 5px;
 }
 
 #btn:hover{
-    background-color: green;
+    background-color: red;
     color:white;
 }

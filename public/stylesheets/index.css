@@ -1,5 +1,97 @@
 body {
-    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://wallpaperaccess.com/full/2131.jpg');
+    /*background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://wallpaperaccess.com/full/2131.jpg');*/
+    background-color: white;
     background-size: cover;
-    color:white;
+    color:black;
+}
+
+#map{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+}
+
+a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#image {
+    height: 200px;
+    width: 300px;
+}
+
+
+#inline {
+    display: inline-block;
+}
+
+#name {
+    color: black;
+}
+
+#name:hover {
+    color: blue;
+}
+
+#place{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+
+.star {
+    font-size: large;
+    display: inline-block;
+    color: gray;
+}
+.star:last-child {
+    margin-right: 0;
+}
+.star:before {
+    content:'\2605';
+}
+.star.on {
+    color: gold;
+}
+.star.half:after {
+    content:'\2605';
+    color: gold;
+    position: absolute;
+    margin-left: -15px;
+    /*margin-right: 5px;*/
+    width: 7.5px;
+    overflow: hidden;
+}
+
+.star.fourth:after {
+    content:'\2605';
+    color: gold;
+    position: absolute;
+    margin-left: -15px;
+    /*margin-right: 5px;*/
+    width: 5px;
+    overflow: hidden;
+}
+
+.star.three-fourth:after {
+    content:'\2605';
+    color: gold;
+    position: absolute;
+    margin-left: -15px;
+    /*margin-right: 5px;*/
+    width: 10px;
+    overflow: hidden;
+}
+
+.no {
+    font-size: large;
 }

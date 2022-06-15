@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate')%>
+<div class="container">
     <h1 class="text-center">Edit Attraction</h1>
     <form action="/attractions/<%=attraction._id%>?_method=PUT" method="POST" novalidate class="validated-form"
         enctype="multipart/form-data">
@@ -46,5 +47,5 @@
         <button class="btn btn-outline-success">Update Attraction</button>
     </form>
     <a href="/attractions/<%= attraction._id %>">Back To Attraction</a>
-
+</div>
     <script src="/assets/countInputFiles.js"></script>

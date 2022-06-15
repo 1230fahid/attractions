@@ -1,4 +1,6 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+<link rel="stylesheet" href="/stylesheets/navbar.css">
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark shadow-5-strong bg-danger" id="nav">
     <a class="navbar-brand" href="#">YelpCamp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +27,7 @@
                 name="region">
             <input class="form-control mr-sm-2" type="search" placeholder="Search Country" aria-label="Search"
                 name="country">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <% if(!currentUser) { %>
             <!-- This checks if user is logged in or not -->

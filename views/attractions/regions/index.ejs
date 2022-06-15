@@ -2,49 +2,102 @@
 <link rel="stylesheet" href="/stylesheets/index.css">
 <link rel="stylesheet" href="/stylesheets/pages.css">
 
-<div id="map" style="width: 100%; height: 500px"></div>
-    <h1>
-        Attractions in region: <%=regions[0].region%>
-    </h1>
+<div id="map" style="width: 100%; height: 600px"></div>
+
+<main class="container">
+    <!--All of this content will be passed to out boiler plate template as 'body'-->
+    <h1>Attractions in region: <%=regions[0].region%></h1>
+    <a href="/attractions/new">Add Attraction</a>
     <ul>
-        <% for (let i = (page-1)*10; i < page*10; i++) {%>
+        <% for (let i = (page-1)*30; i < page*30; i++) {%>
             <% if (i == regions.length) {%>
                 <% break %>
             <%}%>
-            <div class="card bg-dark" mb-3>
-                <div class="row">
-                    <div id="images" class="col-md-4">
-                        <img class="img-fluid" alt="" src="<%=regions[i].images[0].url%>">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%=regions[i].name%>
-                            </h5>
-                            <p class="card-text">
-                                <%=regions[i].description%>
-                            </p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    <%=regions[i].region%> - <%=regions[i].country%>
-                                </small>
-                            </p>
-                            <a href="/attractions/<%=regions[i]._id%>" class="btn btn-primary">View
+            <div class="bg-white" id="inline">
+                <div class="m-2 card">
+                    <div id="images">
+                        <img id = "image" class="img-fluid" alt="" src="<%=regions[i].images[0].url%>">
+                        <div class="">
+                            <a href="/attractions/<%=regions[i]._id%>" id="name">
                                 <%=regions[i].name%>
                             </a>
+                            <div id="place">
+                                <small>Region: <%=regions[i].region%></small>
+                            </div>
+                            <div id="place">
+                                <small>Country: <%=regions[i].country%></small>
+                            </div>
+                            <div id="place">
+                                <small><%if (ratings[i] != "No reviews yet") { %>
+                                        <%if (parseFloat(ratings[i]) <= (Math.floor(parseFloat(ratings[i])) + 0.25)) {%>
+                                            (<%=ratings[i]%>)
+                                            <% num = Math.floor(parseFloat(ratings[i])) %>
+                                            <span>
+                                                <% for(let i=0; i < num; i++) {%>
+                                                    <span class="star on"></span>
+                                                <%}%>
+                                                <% for(let i=5-num; i > 0; i--) {%>
+                                                    <span class="star"></span>
+                                                <%}%>
+                                            </span>
+                                        <%} else if (parseFloat(ratings[i]) < (Math.floor(parseFloat(ratings[i])) + 0.50)) {%>
+                                            (<%=ratings[i]%>)
+                                            <% num = Math.floor(parseFloat(ratings[i])) %>
+                                            <span>
+                                                <% for(let i=0; i < num; i++) {%>
+                                                    <span class="star on"></span>
+                                                <%}%>
+                                                <span class="star fourth"></span>
+                                                <% for(let i=5-num; i > 1; i--) {%>
+                                                    <span class="star"></span>
+                                                <%}%>
+                                            </span>
+                                            <!--<span class="star half"></span>-->
+                                        <%} else if (parseFloat(ratings[i]) < (Math.floor(parseFloat(ratings[i])) + 0.75)) {%>
+                                            (<%=ratings[i]%>)
+                                            <% num = Math.floor(parseFloat(ratings[i])) %>
+                                            <span>
+                                                <% for(let i=0; i < num; i++) {%>
+                                                    <span class="star on"></span>
+                                                <%}%>
+                                                <span class="star half"></span>
+                                                <% for(let i=5-num; i > 1; i--) {%>
+                                                    <span class="star"></span>
+                                                <%}%>
+                                            </span>
+                                        <%} else if (parseFloat(ratings[i]) < (Math.floor(parseFloat(ratings[i])) + 1)) {%>
+                                            (<%=ratings[i]%>)
+                                            <% num = Math.floor(parseFloat(ratings[i])) %>
+                                            <span>
+                                                <% for(let i=0; i < num; i++) {%>
+                                                    <span class="star on"></span>
+                                                <%}%>
+                                                <span class="star three-fourth"></span>
+                                                <% for(let i=5-num; i > 1; i--) {%>
+                                                    <span class="star"></span>
+                                                <%}%>
+                                            </span>
+                                        <%}%>
+                                    <%}else {%>
+                                        <span class="no"><%=ratings[i]%></span>
+                                    <%}%>
+                                </small>
+                            </div>
                         </div>
                     </div>
+                    <!--<div class="col-md-8">
+                    </div>-->
                 </div>
             </div>
-            <%}%>
+        <%}%>
     </ul>
 
     <div id="pages">
         <% if(page == 1) {%>
-            <%if (regions.length > 10) {%>
+            <%if (regions.length > 30) {%>
                 <a href="/attractions?page=<%=parseInt(page)+1%>&region=<%=regions[0].region%>&country=" class="btn btn-primary mb-1" id="btn">></a>
             <%}%>
-        <%} else if((regions.length > ((page-1) * 10)) && (regions.length <= (page * 10))) {%>
+        <%} else if((regions.length > ((page-1) * 30)) && (regions.length <= (page * 30))) {%>
             <a href="/attractions?page=<%=parseInt(page)-1%>&region=<%=regions[0].region%>&country=" class="btn btn-primary mb-1" id="btn"><</a>
         <%} else {%>
             <a href="/attractions?page=<%=parseInt(page)-1%>&region=<%=regions[0].region%>&country=" class="btn btn-primary mb-1" id="btn"><</a>
@@ -56,3 +109,4 @@
         const attractions = {features: <%- JSON.stringify(regions)%>}
     </script>
     <script src="/assets/clusterMap.js"></script>
+    </main>
