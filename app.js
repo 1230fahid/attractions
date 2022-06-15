@@ -16,7 +16,6 @@ const res = require('express/lib/response');
 const engine = require('ejs-mate');
 const morgan = require('morgan');
 const AppError = require('./utils/AppError.js');
-//const catchAsync = require('./utils/catchAsync.js');
 const { attractionSchema } = require('./utils/schemas.js');
 const attractions = require('./routes/attractions.js');
 const session = require('express-session');
@@ -33,7 +32,7 @@ const helmet = require('helmet');
 
 const MongoStore = require("connect-mongo");
 
-app.use(flash()); //needed to use flash
+app.use(flash());
 app.use(morgan('tiny'));
 
 
@@ -92,7 +91,7 @@ app.use(
 
 const dbURL = process.env.DB_URL;
 //'mongodb://localhost:27017/worldAttractions'
-mongoose.connect('mongodb://localhost:27017/worldAttractions', {}) //set up connection to mongo (still need mongod on powershell). movieApp is an example
+mongoose.connect(dbURL, {})
     .then(() => {
         console.log("CONNECTION OPEN!!!!");
     })
@@ -114,12 +113,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.engine('ejs', engine);
-app.use(express.static(path.join(__dirname, 'public'))) //used to mention the public directory from which I am serving the static files, such as index.css
-//allows you to use static files(css files, js files, etc.)
+app.use(express.static(path.join(__dirname, 'public'))) 
 
 app.use(mongoSanitize());
 
-const store = MongoStore.create({ //stores session in mongo
+const store = MongoStore.create({
     mongoUrl: 'mongodb://localhost:27017/worldAttractions',
     crypto: {
         secret: 'thisshouldbeabettersecret!',
@@ -132,8 +130,6 @@ store.on("error", function(e) {
 })
 
 const sessionConfig = {
-    //name: 'blah' //changes name of the cookie
-    //store, //uses whatever is passed to store info
     store,
     secret: 'thisshouldbeabettersecret!',
     resave: false,
