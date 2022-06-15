@@ -83,6 +83,7 @@ app.use(
                 "https://images.unsplash.com/",
                 "https://a.cdn-hotels.com/gdcs/production29/d372/b70fa24d-b7b9-491a-a67a-8da0857b80a2.jpg",
                 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bojnice-castle-1603142898.jpg',
+                "https://external-preview.redd.it/rCvFZmNgdBg5105WHGcs2Q1jGkoYkdoZBaxSKz1Fshc.jpg?auto=webp&s=198537c17541d18a6bdd74dab7cddf93d1230258",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
